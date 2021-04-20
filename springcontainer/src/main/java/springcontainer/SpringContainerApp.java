@@ -6,11 +6,12 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.core.io.ClassPathResource;
 
-public class SpiringContainerApp {
+public class SpringContainerApp {
 
 	public static void main(String[] args) {
 //		testBeanFactory();
-		testApplicationContext();
+		testBeanFactory2();
+//		testApplicationContext();
 	}
 
 	private static void testApplicationContext() {
@@ -46,6 +47,15 @@ public class SpiringContainerApp {
 		User user5 = (User)ac.getBean("user5");
 		System.out.println("User5:" + user5);
 		
+		//	의존성이 주입된 빈 얻어오기
+		Friend friend = (Friend)ac.getBean("friend");
+		System.out.println("Friend:" + friend);
+		User user6 = (User)ac.getBean("user6");
+		System.out.println("User6:" + user6);
+		
+		//	집합 객체가 주입된 빈 얻어오기
+		User user7 = (User)ac.getBean("user7");
+		System.out.println("User7:" + user7);
 	}
 	
 	private static void testBeanFactory() {
@@ -64,5 +74,13 @@ public class SpiringContainerApp {
 		user = (User)bf.getBean("member");	//	name이 user인 bean 획득
 		System.out.println("by name:" + user);
 		
+	}
+	
+	private static void testBeanFactory2() {
+		BeanFactory bf =
+				new XmlBeanFactory(new ClassPathResource("config/applicationContext2.xml"));
+		
+		User user = (User)bf.getBean("user");
+		System.out.println("by Component Scan:" + user);
 	}
 }
